@@ -491,6 +491,21 @@ static void RAISE_RUNTIME_ERROR_RAISED_STOP_ITERATION(PyThreadState *tstate, cha
 }
 #endif
 
+#if PYTHON_VERSION >= 0x300
+static void Nuitka_SetFrameGenerator(struct Nuitka_FrameObject *nuitka_frame, PyObject *generator) {
+#if PYTHON_VERSION < 0x3b0
+    nuitka_frame->m_frame.f_gen = generator;
+#else
+    nuitka_frame->m_generator = generator;
+#endif
+
+    // Mark the frame as executing
+    if (generator) {
+        Nuitka_Frame_MarkAsExecuting(nuitka_frame);
+    }
+}
+#endif
+
 static PyObject *_Nuitka_Generator_send(PyThreadState *tstate, struct Nuitka_GeneratorObject *generator,
                                         PyObject *value, struct Nuitka_ExceptionPreservationItem *exception_state) {
     CHECK_OBJECT(generator);
