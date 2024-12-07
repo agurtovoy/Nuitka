@@ -247,6 +247,7 @@ class build(distutils.command.build.build):
         # Let's use the python source files in the build_lib since these should
         # get copied over.
         os.chdir(build_lib)
+        wheel_logger.info("### build_lib %s" % ([dir for dir in os.walk(build_lib)],))
 
         if self.distribution.package_dir and "" in self.distribution.package_dir:
             main_package_dir = os.path.join(
@@ -283,7 +284,6 @@ class build(distutils.command.build.build):
                 sys.executable,
                 "-m",
                 "nuitka",
-                "--module",
                 "--enable-plugin=pylint-warnings",
                 "--output-dir=%s" % output_dir,
                 "--nofollow-import-to=*.tests",
@@ -354,6 +354,9 @@ class build(distutils.command.build.build):
                 delete_report = True
             else:
                 delete_report = False
+
+            if not any(option in command for option in ["--module", "--standalone", "--onefile"]):
+                command.append("--module")
 
             command.append(main_filename)
 
