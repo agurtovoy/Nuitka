@@ -240,13 +240,13 @@ class ParameterSpec(object):
     def getParameterNames(self):
         result = list(self.pos_only_args + self.normal_args)
 
-        result += self.kw_only_args
-
         if self.list_star_arg is not None:
             result.append(self.list_star_arg)
 
         if self.dict_star_arg is not None:
             result.append(self.dict_star_arg)
+
+        result += self.kw_only_args
 
         return tuple(result)
 
@@ -590,7 +590,7 @@ def matchCall(
                     unassigned,
                     "s" if unassigned > 1 else "",
                     " and ".join(
-                        "'%s'" % [arg for arg in kw_only_args if not isAssigned(arg)]
+                        ["'%s'" % arg for arg in kw_only_args if not isAssigned(arg)]
                     ),
                 )
             )
