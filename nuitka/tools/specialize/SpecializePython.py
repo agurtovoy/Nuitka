@@ -1052,7 +1052,7 @@ hard_import_node_classes = {}
 
             for spec_desc in spec_descriptions:
                 spec = spec_desc.spec
-                parameter_names = spec.getParameterNames()
+                parameter_names = spec.getParameterNames2()
 
                 named_children_types = {}
                 if spec.name == "pkg_resources.require":

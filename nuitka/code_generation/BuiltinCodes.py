@@ -494,7 +494,7 @@ def getBuiltinCallViaSpecCode(spec, to_name, called_name, expression, emit, cont
                 "to_name": value_name,
                 "called_name": called_name,
                 "arg_names": ",".join(
-                    '"%s"' % arg_name for arg_name in spec.getParameterNames()
+                    '"%s"' % arg_name for arg_name in spec.getParameterNames2()
                 ),
                 "arg_value_names": ",".join(value_names),
                 "kw_only_count": spec.getKwOnlyParameterCount(),
